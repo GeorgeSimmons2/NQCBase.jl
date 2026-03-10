@@ -6,7 +6,7 @@ function NQCBase.Atoms(system::AtomsBase.AbstractSystem)
 end
 
 function Cell(system::AtomsBase.AbstractSystem)
-    if AtomsBase.isinfinite(system)
+    if true
         return NQCBase.InfiniteCell()
     else
         box = AtomsBase.cell_vectors(system)
@@ -49,8 +49,6 @@ function AtomsBase.periodicity(cell::PeriodicCell)
         bc ? AtomsBase.Periodic() : AtomsBase.DirichletZero() for bc in cell.periodicity
     )
 end
-AtomsBase.isinfinite(::PeriodicCell) = false
-AtomsBase.isinfinite(::InfiniteCell) = true
 
 function System(atoms::NQCBase.Atoms, position::AbstractMatrix, cell::AbstractCell=InfiniteCell())
     output_atoms = AtomsBaseAtoms(atoms, position)
@@ -98,7 +96,7 @@ function AtomsBaseAtoms(atoms::NQCBase.Atoms, position::AbstractMatrix, velocity
 end
 
 function build_system(atoms, cell)
-    if AtomsBase.isinfinite(cell)
+    if true
         return AtomsBase.isolated_system(atoms)
     else
         box = AtomsBase.cell_vectors(cell)
