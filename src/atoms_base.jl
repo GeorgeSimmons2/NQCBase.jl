@@ -38,7 +38,7 @@ function Velocity(system::AtomsBase.AbstractSystem)
     return output
 end
 
-function AtomsBase.bounding_box(cell::PeriodicCell)
+function AtomsBase.cell_vectors(cell::PeriodicCell)
     S = size(cell.vectors, 2)
     return SVector{S}(auconvert.(u"Å", vec) for vec in eachcol(cell.vectors))
 end
@@ -101,7 +101,7 @@ function build_system(atoms, cell)
     if AtomsBase.isinfinite(cell)
         return AtomsBase.isolated_system(atoms)
     else
-        box = AtomsBase.bounding_box(cell)
+        box = AtomsBase.cell_vectors(cell)
         bc = AtomsBase.boundary_conditions(cell)
         return AtomsBase.atomic_system(atoms, box, bc)
     end
