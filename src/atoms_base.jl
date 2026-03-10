@@ -43,7 +43,7 @@ function AtomsBase.cell_vectors(cell::PeriodicCell)
     return SVector{S}(auconvert.(u"Å", vec) for vec in eachcol(cell.vectors))
 end
 
-function AtomsBase.boundary_conditions(cell::PeriodicCell)
+function AtomsBase.periodicity(cell::PeriodicCell)
     S = size(cell.vectors, 2)
     return SVector{S}(
         bc ? AtomsBase.Periodic() : AtomsBase.DirichletZero() for bc in cell.periodicity
@@ -102,7 +102,7 @@ function build_system(atoms, cell)
         return AtomsBase.isolated_system(atoms)
     else
         box = AtomsBase.cell_vectors(cell)
-        bc = AtomsBase.boundary_conditions(cell)
+        bc = AtomsBase.periodicity(cell)
         return AtomsBase.atomic_system(atoms, box, bc)
     end
 end
