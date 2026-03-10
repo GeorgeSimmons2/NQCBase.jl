@@ -9,7 +9,7 @@ function Cell(system::AtomsBase.AbstractSystem)
     if AtomsBase.isinfinite(system)
         return NQCBase.InfiniteCell()
     else
-        box = AtomsBase.bounding_box(system)
+        box = AtomsBase.cell_vectors(system)
         cell = PeriodicCell(reduce(hcat, box))
         NQCBase.set_periodicity!(cell, AtomsBase.periodicity(system))
         return cell
