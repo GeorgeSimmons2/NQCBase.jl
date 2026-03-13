@@ -93,7 +93,7 @@ function build_system(atoms, cell)
         return AtomsBase.isolated_system(atoms)
     else
         box = AtomsBase.cell_vectors(cell)
-        bc = cell.periodicity
+        bc = tuple(cell.periodicity...)
         return AtomsBase.atomic_system(atoms, box, bc)
     end
 end
