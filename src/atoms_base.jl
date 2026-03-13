@@ -6,7 +6,7 @@ function NQCBase.Atoms(system::AtomsBase.AbstractSystem)
 end
 
 function Cell(system::AtomsBase.AbstractSystem)
-    if true
+    if isa(AtomsBase.cell(system), AtomsBase.IsolatedCell)
         return NQCBase.InfiniteCell()
     else
         box = AtomsBase.cell_vectors(system)
@@ -96,7 +96,7 @@ function AtomsBaseAtoms(atoms::NQCBase.Atoms, position::AbstractMatrix, velocity
 end
 
 function build_system(atoms, cell)
-    if true
+    if cell isa InfiniteCell
         return AtomsBase.isolated_system(atoms)
     else
         box = AtomsBase.cell_vectors(cell)
