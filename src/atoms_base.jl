@@ -43,13 +43,6 @@ function AtomsBase.cell_vectors(cell::PeriodicCell)
     return SVector{S}(auconvert.(u"Å", vec) for vec in eachcol(cell.vectors))
 end
 
-function AtomsBase.periodicity(cell::PeriodicCell)
-    S = size(cell.vectors, 2)
-    return SVector{S}(
-        bc ? AtomsBase.Periodic() : AtomsBase.DirichletZero() for bc in cell.periodicity
-    )
-end
-
 function System(atoms::NQCBase.Atoms, position::AbstractMatrix, cell::AbstractCell=InfiniteCell())
     output_atoms = AtomsBaseAtoms(atoms, position)
     return build_system(output_atoms, cell)
