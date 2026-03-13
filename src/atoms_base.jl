@@ -11,7 +11,7 @@ function Cell(system::AtomsBase.AbstractSystem)
     else
         box = AtomsBase.cell_vectors(system)
         cell = PeriodicCell(reduce(hcat, box))
-        NQCBase.set_periodicity!(cell, AtomsBase.periodicity(system))
+        NQCBase.set_periodicity!(cell, collect(AtomsBase.periodicity(system)))
         return cell
     end
 end
@@ -93,7 +93,7 @@ function build_system(atoms, cell)
         return AtomsBase.isolated_system(atoms)
     else
         box = AtomsBase.cell_vectors(cell)
-        bc = AtomsBase.periodicity(cell)
+        bc = cell.periodicity
         return AtomsBase.atomic_system(atoms, box, bc)
     end
 end
